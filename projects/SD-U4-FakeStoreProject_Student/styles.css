@@ -1,0 +1,23 @@
+
+body {
+    display: flex;
+    align-items: flex-start;
+    width: 100vw;
+    overflow-x: hidden;
+}
+
+nav {
+width: 100vw;
+}
+
+#display {
+    text-align: center;
+    margin-top: 100px;
+}
+
+footer {
+    align-content: center;
+    background-color: black;
+    color: white;
+    /* 'fix' to bottom of viewport*/
+}

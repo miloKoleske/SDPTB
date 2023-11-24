@@ -1,0 +1,1 @@
+// everything except body (nav, display, footer) need to have prevent default action to display in flex
