@@ -4,8 +4,8 @@
 
 // ! Global Variables
 let apiURL = 'https://fakestoreapi.com/products/'
-let storedItem = [];
-
+let cart = [];
+let display = document.getElementById('display');
 
 // ! DOM Elements - creating variables
 const category = document.querySelectorAll('button')
@@ -14,18 +14,113 @@ const electronics = document.getElementById('electronics');
 const mensClothing = document.getElementById('mensClothing');
 const womensClothing = document.getElementById('womensClothing');
 const jewelry = document.getElementById('jewelry');
+// ! const keptCards = document.getElementByID('kept-cards')
 
 
 
 // ! Functions
 const fakeStore = async(endpoint) => {
     const response = await fetch(apiURL + endpoint ); //response will manipulate with endpoint base URL
-    const data = await response.json(); // take response from fetch, turn it into json 
-    //console.log(data)
-    // declaring function - framing is just making it (not invoking)
-    displayCards();
-    //console.log('test', displayCards)
+    const data = await response.json(); // take response from fetch, turn it into json
+    console.log(data);
+    console.log(display.children.length);
+
+    while (display.children.length > 0) { //access all cards by using display.children - which gives a HTML collection
+        display.children[0].remove();
+    } // while loops removes all data, then re-adds in w/ displayCards
+    displayCards(data);
+    } 
+
+    // insturction on how to show info
+const displayCards = data => {
+    console.log(data);
+    data.forEach(element => {
+        
+// * Create Elements of card
+let card = document.createElement('div');
+let categoryButton = document.createElement('h3');
+let description = document.createElement('p');
+let id = document.createElement('h5');
+let image = document.createElement('img');
+let body = document.createElement('div');
+let price = document.createElement('p');
+let title = document.createElement('h1');
+let btn = document.createElement('button');
+
+//  * Set attributes -- describing all parts in html
+card.className = 'card';
+card.style.width = '18rem';
+image.src = element.image;
+image.className = 'card-img-top';
+title.className = 'card-title';
+title.textContent = element.title;
+description.className = 'card-text';
+description.textContent = element.description;
+price.className = 'card-price';
+price.textContent = element.price;
+btn.className = 'btn btn-primary';
+btn.textContent = 'Add to Cart'
+btn.className = 'btn btn-outline-success me-2';
+btn.onclick = () => {
+    let element = {
+        id: element.id,
+        title: element.title,
+        cost: element.cost,
+        quantity: 1
     }
+    cart.push(element);
+    submitToCart();
+}
+// use for each loop, or array method, go into element, give me image attribute
+
+// * Append Elements -- appending all elements to each other -- go from bottom to top - add bottom to second to bottom, etc.
+card.appendChild(image);
+card.appendChild(title);
+card.appendChild(description);
+card.appendChild(price);
+card.appendChild(btn);
+display.appendChild(card);
+});
+}
+// TODO: Create Accordion
+
+
+
+// TODO: Display Cart
+const displayCart = () => {
+    // use parameter to add to cart array
+console.log('Items in Cart: ', cart);
+cart.map(element => {
+
+    // * Create Elements of card
+let card = document.createElement('div');
+let image = document.createElement('image');
+let price = document.createElement('p');
+let title = document.createElement('h1');
+let body = document.createElement('div');
+
+//  * Set attributes -- describing all parts in html
+card.className = 'card';
+card.style.width = '18rem';
+image.src = element.image;
+image.className = 'card-img-top';
+title.className = 'card-title';
+title.textContent = element.title;
+cardPrice.className = 'card-price';
+cardPrice.textContent = element.price;
+
+// * Append Elements -- appending all elements to each other -- go from bottom to top - add bottom to second to bottom, etc.
+p.appendChild(p);
+body.appendChild(p);
+body.appendChild(h1);
+card.appendChild(body);
+card.appendChild(image);
+d.appendChild(card);
+keptCards.appendChild(div);
+})
+}
+
+// ! figure out fetch, error, and display - might need to do something w/ response function?
 
 /* 
 Async 
@@ -38,124 +133,102 @@ Async
 
 
 
-// TODO: Add comments that detail the three main steps of creating elements.
-// TODO: Display Single Card
-// * Create Elements of card
-let categoryButton = document.createElement('h3');
-let description = document.createElement('p');
-let id = document.createElement('h5');
-let image = document.createElement('image');
-let price = document.createElement('p');
-let rating = document.createElement('p');
-let title = document.createElement('h1');
-let btn = document.createElement('a');
-// ! item button = a
+// // TODO: Add comments that detail the three main steps of creating elements.
+// // TODO: Display Single Card
+// // * Create Elements of card
+// let card = document.createElement('div');
+// let categoryButton = document.createElement('h3');
+// let description = document.createElement('p');
+// let id = document.createElement('h5');
+// let image = document.createElement('image');
+// let body = document.createElement('div');
+// let price = document.createElement('p');
+// let title = document.createElement('h1');
+// let btn = document.createElement('button');
 
+// //  * Set attributes -- describing all parts in html
+// card.className = 'card';
+// card.style.width = '18rem';
+// image.src = element.image;
+// image.className = 'card-img-top';
+// title.className = 'card-title';
+// title.textContent = element.title;
+// description.className = 'card-text';
+// description.textContent = element.description;
+// cardPrice.className = 'card-price';
+// cardPrice.textContent = element.price;
+// btn.className = 'btn btn-primary';
+// btn.textContent = 'Add to Cart'
+// btn.className = 'btn btn-outline-success me-2';
+// btn.onclick = () => {
+//     let element = {
+//         id: element.id,
+//         title: element.title,
+//         cost: element.cost,
+//         quantity: 1
+//     }
+//     cart.push(element);
+//     submitToCart();
+// }
+// use for each loop, or array method, go into element, give me image attribute
 
-//  * Set attributes -- describing all parts in html
-card.className = 'card';
-card.style.width = '18rem';
-img.src = item.img;
-img.className = 'card-img-top';
-title.className = 'card-title';
-title.textContent = item.title;
-description.className = 'card-text';
-description.textContent = item.description;
-cardPrice.className = 'card-price';
-cardPrice.textContent = item.price;
-cardRating.className = 'card-rating'
-cardRating.textContent = item.rating;
-btn.className = 'btn btn-primary';
-btn.textContent = 'Add to Cart'
-
-
-
-/* `<div class="card-body">
-<h5 class="card-title">Card title</h5>
-<p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-<a href="#" class="btn btn-primary">Text</a>` */
-
-btn.className = 'btn btn-outline-success me-2';
-
-
-
-
-card.className = 'card'; // setting attributes of element, filling element with actual data for the first time, consider it like adding attributes to it
-card.style.width = '18rem'; // both card. are utilizing the elements previously created (in create elements section)
-img.src = recipe.img; // depends on actual url of recipe (basically still empty)
-img.className = 'card-img-top';
-img.alt = recipe.title; 
-body.className = 'card-body';
-title.className = 'card-title';
-title.textContent = recipe.title; // changing text to recipe's title
-btn.className = 'btn btn-primary';
-btn.textContent = 'Add'; // printing out space for button w/ text reading 'Add' 
-
-
-
-
-/* const displayCards = () => {
-let category = document.createElement('h3');
-let description = document.createElement('p');
-let id = document.createElement('h5');
-let image = document.createElement('image');
-let price = document.createElement('p');
-let rating = document.createElement('p');
-let title = document.createElement('h1');
-} */
+// * Append Elements -- appending all elements to each other -- go from bottom to top - add bottom to second to bottom, etc.
+// p.appendChild(button);
+// p.appendChild(p);
+// body.appendChild(p);
+// body.appendChild(h1);
+// card.appendChild(body);
+// card.appendChild(image);
+// div.appendChild(card);
+// keptCards.appendChild(div);
+// console.log(keptCards);
 
 // TODO: Create Accordion
 
 
 
 // TODO: Display Cart
+const submitToCart = () => {
+    // use parameter to add to cart array
+console.log('Items in Cart: ', cart);
+cart.map(element => {
 
+    // * Create Elements of card
+let card = document.createElement('div');
+let image = document.createElement('image');
+let price = document.createElement('p');
+let title = document.createElement('h1');
+let body = document.createElement('div');
 
+//  * Set attributes -- describing all parts in html
+card.className = 'card';
+card.style.width = '18rem';
+image.src = element.image;
+image.className = 'card-img-top';
+title.className = 'card-title';
+title.textContent = element.title;
+cardPrice.className = 'card-price';
+cardPrice.textContent = element.price;
 
-
-
-
-
-
-
+// * Append Elements -- appending all elements to each other -- go from bottom to top - add bottom to second to bottom, etc.
+p.appendChild(p);
+body.appendChild(p);
+body.appendChild(h1);
+card.appendChild(body);
+card.appendChild(image);
+div.appendChild(card);
+keptCards.appendChild(div);
+})
+}
 
 // ! Event Listeners
-// searchDisplay.addEventListener('submit', e=> {
-//     e.preventDefault();
 
+// TODO: onclick anonymous function generates new object 
 
-// fetch(apiURL)
-//             .then(res=>res.json())
-//             .then(data => {
-//                 let title = data[0].title
-//                 // [0] here is limiting us to only the first index
-//                 console.log(data[0])
+/* button.onclick = (()=> {
+    fetch r
 
-
-//                 let obj = {
-//                     category: data.category,
-//                     description: data.description,
-//                     id: data.id,
-//                     image: data.image,
-//                     price: data.price,
-//                     rating: data.rating,
-//                     title: data.title
-//                 }
-
-//                 console.log(obj);
-//                 // console.log(data[0].category);
-//                 // console.log(data[0].description);
-//                 // console.log(data[0].image);
-//                 // console.log(data[0].price);
-//                 // console.log(data[0].title);
-//             })
-//             //.then(loadFakeStore())
-            
-      
-//             .catch(error => console.error);
-//         //})
-// // Invoke fakeStore
-
+}) */
 electronics.addEventListener('click', e => {
     fakeStore('category/electronics?sort=asc')
 
@@ -175,17 +248,20 @@ jewelry.addEventListener('click', e => {
 
 })
 
-window.onload = (e => {
+window.onload = e => {
     // when window load, run code
     fakeStore(""); // just baseURL, + nothing
-})
+}
 
 
 
 
+// await fetch only runs when button is clicked, consider it like an event based thing
 
 
-            // item === object.title
 
 
-// when fakestore loads, fire off display card, which will put data into screen, making dynamically in JS, make elements in JS exactly as they are in bootstrap 
+            // element === object.title
+
+
+// when fakestore loads, fire off display card, which will put data into screen, made dynamically in JS, make elements in JS exactly as they are in bootstrap 
